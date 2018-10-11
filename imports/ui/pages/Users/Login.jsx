@@ -1,44 +1,41 @@
-import React from 'react';
-import {AutoForm, AutoField, ErrorsField} from 'uniforms-unstyled';
+import React from 'react'
+import { AutoForm, AutoField } from 'uniforms-unstyled';
 import SimpleSchema from 'simpl-schema';
+import { Redirect } from 'react-router-dom'
+import route from '/imports/routing/router.js';
 
-export default class Login extends React.Component {
-    constructor() {
-        super();
+export default class Login extends React.Component{
+    constructor (props){
+        super(props);
     }
 
-    handleLogin = (data) => {
-        const {email, password} = data;
-        Meteor.loginWithPassword(email, password, (err) => {
-            if (!err) {
-                return this.props.history.push('/posts');
+
+
+    submit = (data) => {
+        Meteor.loginWithPassword(data.email, data.password, function(error){
+            if(!error){ 
+                route.go('/');
+            }else{
+                console.log("Erore de logare: "+error);
             }
-            alert(err.reason);
         });
-    };
+    } 
 
-    render() {
+    render(){
         return (
-            <div className="authentication">
-                <AutoForm onSubmit={this.handleLogin} schema={LoginSchema}>
-                    <ErrorsField/>
-
-                    <AutoField name="email"
-                               placeholder="Email"/>
-
-                    <AutoField name="password" type="password" placeholder="Password"/>
-
-                    <button type="submit">Login</button>
+            <div className='authentication'>
+                <AutoForm onSubmit={this.submit} schema={schema}>
+                    <AutoField name="email" />
+                    <AutoField name="password" />
+                    <button type="submit"> Login </button>
                 </AutoForm>
             </div>
         )
     }
 }
 
-const LoginSchema = new SimpleSchema({
-    email: {
-        type: String,
-        regEx: SimpleSchema.RegEx.Email
-    },
-    password: {type: String}
+const schema = new SimpleSchema({
+    email: String,
+    password: String
 });
+
