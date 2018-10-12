@@ -1,7 +1,7 @@
 import React from 'react'
 import { AutoForm, AutoField } from 'uniforms-unstyled';
 import SimpleSchema from 'simpl-schema';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 import route from '/imports/routing/router.js';
 
 export default class Login extends React.Component{
@@ -14,7 +14,9 @@ export default class Login extends React.Component{
     submit = (data) => {
         Meteor.loginWithPassword(data.email, data.password, function(error){
             if(!error){ 
-                route.go('/');
+                //console.log(this.props)
+                return this.props.history.push('/');
+                //route.go('/');
             }else{
                 console.log("Erore de logare: "+error);
             }
@@ -24,7 +26,7 @@ export default class Login extends React.Component{
     render(){
         return (
             <div className='authentication'>
-                <AutoForm onSubmit={this.submit} schema={schema}>
+                <AutoForm onSubmit={this.submit.bind(this)} schema={schema}>
                     <AutoField name="email" />
                     <AutoField name="password" />
                     <button type="submit"> Login </button>

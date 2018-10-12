@@ -8,7 +8,7 @@ export default class Home extends React.Component {
     }
 
     componentDidMount(){
-        Meteor.call('donut.list', (err, res) => {
+        Meteor.call('secured.donut_list', (err, res) => {
             this.setState({
                 loading: false,
                 donuts: res // assuming the method returns an array of donuts
@@ -24,8 +24,8 @@ export default class Home extends React.Component {
         return (
             <div>
                 {
-                    this.state.donuts.map(donut => {
-                        return <div key={donut._id}>{donut._id}</div>
+                    this.state.donuts.map( (donut) => {
+                        return <div key={donut._id}>{donut.bitten.toString()}</div>
                     })
                 }
             </div>

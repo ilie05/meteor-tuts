@@ -4,3 +4,4 @@ import Login from '/imports/ui/pages/Users/Login.jsx';
 
 route('/', Home);
 route('/login', Login);
+route('/register)', Register); 

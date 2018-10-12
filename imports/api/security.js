@@ -10,9 +10,10 @@ export default class Security {
         return Roles.userIsInRole(userId, role);
     }
     static checkLoggedIn(userId) {
-        if (!userId) {
-            throw new Meteor.Error('not-authorized', 'You are not authorized');
-        }
+        if (!userId){
+            return false;
+        }       
+        return true;
     }
 
     // add other business logic checks here that you use throughout the app
